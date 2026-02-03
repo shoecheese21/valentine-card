@@ -138,13 +138,15 @@
 <body>
 
   <div class="imageContainer">
-    <img src="https://media1.tenor.com/m/KusI_nTC1d8AAAAC/hi-waving.gif" alt="Waving hello" loading="lazy" />
+    <img src="https://media1.tenor.com/m/KusI_nTC1d8AAAAC/hi-waving.gif" />
+  </div>
 
-<div class="message" id="typingText" aria-live="polite" role="status"></div>
+  <div class="message" id="typingText"></div>
 
   <div class="btnContainer" id="buttons">
-    <button type="button" class="btn yesBtn">YES</button>
-    <button type="button" class="btn noBtn">NO</button>
+    <button class="btn yesBtn">YES</button>
+    <button class="btn noBtn">NO</button>
+  </div>
 
   <!-- Hidden YouTube player -->
   <iframe
@@ -160,7 +162,7 @@
   <script>
     /* ---------- Typing text ---------- */
     const fullText =
-      "I don't believe in 14 February, but I know you the 1 4 me 💘\n\nWill you be my Valentine?";
+      "I dont believe in 14 february, but I know you the 1 4 me 💘\n\nWill you be my Valentine?";
     const glowText = "you the 1 4 me";
     const typingElement = document.getElementById("typingText");
     const buttonContainer = document.getElementById("buttons");
@@ -185,7 +187,10 @@
 
     typeText();
 
-// Buttons display handled after typing finishes.
+    // ⏳ Buttons after 10s
+    setTimeout(() => {
+      buttonContainer.style.display = "block";
+    }, 10000);
 
     /* ---------- Button logic ---------- */
     const yesBtn = document.querySelector(".yesBtn");
@@ -201,7 +206,7 @@
       yesHeight += 20;
       yesBtn.style.width = yesWidth + "px";
       yesBtn.style.height = yesHeight + "px";
-yesBtn.style.fontSize = Math.min(yesWidth / 5, 40) + "px";
+      yesBtn.style.fontSize = Math.min(yesWidth / 5, 60) + "px";
 
       noWidth = Math.max(noWidth - 25, 30);
       noHeight = Math.max(noHeight - 10, 20);
@@ -213,11 +218,12 @@ yesBtn.style.fontSize = Math.min(yesWidth / 5, 40) + "px";
     yesBtn.addEventListener("click", () => {
       // 🎵 Play song
       ytPlayer.src =
-        "https://www.youtube.com/embed/QJO3ROT-A4E?autoplay=1&mute=1";
+        "https://www.youtube.com/embed/QJO3ROT-A4E?autoplay=1";
+
       // ❤️ Show GIF + text
       body.innerHTML = `
         <div class="yesScreen">
-          <img src="https://media2.giphy.com/media/v1.Y2lkPTZjMDliOTUyb3dyMTh3MXlzMzc0NHRpeTJidmx6OHA4ZGFqeWtkMjh2czB3MXB1bSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/XZnquLlXqEKqoEnHrH/giphy.gif" alt="Couple celebrating" loading="lazy" />
+          <img src="https://media2.giphy.com/media/v1.Y2lkPTZjMDliOTUyb3dyMTh3MXlzMzc0NHRpeTJidmx6OHA4ZGFqeWtkMjh2czB3MXB1bSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/XZnquLlXqEKqoEnHrH/giphy.gif" />
           <div class="yesText">It’s a date!!! ❤️🥰</div>
         </div>
       `;
