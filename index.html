@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Valentine 💖</title>
+
+  <!-- Romantic font -->
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-image: url("https://t4.ftcdn.net/jpg/05/53/60/29/360_F_553602980_VBY8V118fn6iumh3tQ8jKMKmlcN301mk.jpg");
+      background-size: cover;
+      background-position: center;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    .imageContainer {
+      width: 200px;
+      height: 200px;
+      margin-top: 50px;
+    }
+
+    .imageContainer img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .message {
+      margin-top: 20px;
+      font-size: 22px;
+      color: white;
+      text-align: center;
+      text-shadow: 1px 1px 4px black;
+      width: 90%;
+      max-width: 420px;
+      min-height: 100px;
+      white-space: pre-wrap;
+    }
+
+    /* ✨ Glow for “you the 1 4 me” */
+    .glow {
+      color: #ffd6e8;
+      animation: glow 1.5s ease-in-out infinite alternate;
+      font-weight: bold;
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 5px #ff69b4;
+      }
+      to {
+        text-shadow: 0 0 20px #ff1493, 0 0 30px #ff1493;
+      }
+    }
+
+    .btnContainer {
+      margin-top: 25px;
+      display: none;
+    }
+
+    .btn {
+      font-size: 22px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .yesBtn {
+      background-color: green;
+      color: white;
+      width: 120px;
+      height: 50px;
+    }
+
+    .noBtn {
+      background-color: red;
+      color: white;
+      width: 120px;
+      height: 50px;
+      margin-left: 10px;
+    }
+
+    /* ❤️ YES RESULT SCREEN */
+    .yesScreen {
+      height: 100vh;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: white;
+      text-align: center;
+    }
+
+    .yesScreen img {
+      width: 220px;
+      margin-bottom: 20px;
+    }
+
+    .yesText {
+      font-family: 'Pacifico', cursive;
+      font-size: 44px;
+      color: #ff4d6d;
+      animation: popIn 1s ease-out forwards, float 3s ease-in-out infinite;
+    }
+
+    @keyframes popIn {
+      0% {
+        transform: scale(0);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="imageContainer">
+    <img src="https://media1.tenor.com/m/KusI_nTC1d8AAAAC/hi-waving.gif" alt="Waving hello" loading="lazy" />
+
+<div class="message" id="typingText" aria-live="polite" role="status"></div>
+
+  <div class="btnContainer" id="buttons">
+    <button type="button" class="btn yesBtn">YES</button>
+    <button type="button" class="btn noBtn">NO</button>
+
+  <!-- Hidden YouTube player -->
+  <iframe
+    id="ytPlayer"
+    width="0"
+    height="0"
+    src=""
+    frameborder="0"
+    allow="autoplay; encrypted-media"
+    allowfullscreen>
+  </iframe>
+
+  <script>
+    /* ---------- Typing text ---------- */
+    const fullText =
+      "I don't believe in 14 February, but I know you the 1 4 me 💘\n\nWill you be my Valentine?";
+    const glowText = "you the 1 4 me";
+    const typingElement = document.getElementById("typingText");
+    const buttonContainer = document.getElementById("buttons");
+
+    let index = 0;
+
+    function typeText() {
+      if (index < fullText.length) {
+        typingElement.innerHTML +=
+          fullText.charAt(index) === "\n"
+            ? "<br>"
+            : fullText.charAt(index);
+        index++;
+        setTimeout(typeText, 50);
+      } else {
+        typingElement.innerHTML = typingElement.innerHTML.replace(
+          glowText,
+          `<span class="glow">${glowText}</span>`
+        );
+      }
+    }
+
+    typeText();
+
+// Buttons display handled after typing finishes.
+
+    /* ---------- Button logic ---------- */
+    const yesBtn = document.querySelector(".yesBtn");
+    const noBtn = document.querySelector(".noBtn");
+    const ytPlayer = document.getElementById("ytPlayer");
+    const body = document.body;
+
+    let yesWidth = 120, yesHeight = 50;
+    let noWidth = 120, noHeight = 50;
+
+    noBtn.addEventListener("click", () => {
+      yesWidth += 50;
+      yesHeight += 20;
+      yesBtn.style.width = yesWidth + "px";
+      yesBtn.style.height = yesHeight + "px";
+yesBtn.style.fontSize = Math.min(yesWidth / 5, 40) + "px";
+
+      noWidth = Math.max(noWidth - 25, 30);
+      noHeight = Math.max(noHeight - 10, 20);
+      noBtn.style.width = noWidth + "px";
+      noBtn.style.height = noHeight + "px";
+      noBtn.style.fontSize = Math.max(noWidth / 6, 10) + "px";
+    });
+
+    yesBtn.addEventListener("click", () => {
+      // 🎵 Play song
+      ytPlayer.src =
+        "https://www.youtube.com/embed/QJO3ROT-A4E?autoplay=1&mute=1";
+      // ❤️ Show GIF + text
+      body.innerHTML = `
+        <div class="yesScreen">
+          <img src="https://media2.giphy.com/media/v1.Y2lkPTZjMDliOTUyb3dyMTh3MXlzMzc0NHRpeTJidmx6OHA4ZGFqeWtkMjh2czB3MXB1bSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/XZnquLlXqEKqoEnHrH/giphy.gif" alt="Couple celebrating" loading="lazy" />
+          <div class="yesText">It’s a date!!! ❤️🥰</div>
+        </div>
+      `;
+    });
+  </script>
+
+</body>
+</html>
